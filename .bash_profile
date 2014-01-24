@@ -13,6 +13,9 @@ export BASH_IT=$HOME/.bash_it
 # location /.bash_it/themes/
 export BASH_IT_THEME='keymon'
 
+# Add the config command to version the $HOME
+alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
+
 # Your place for hosting Git repos. I use this for private repos.
 export GIT_HOSTING='git@git.domain.com'
 
