@@ -16,13 +16,16 @@ In order to clone this there are 2 options, clone it to a repo and move it
 or this:
 
 	cd $HOME
-	git init --git-dir=.config.git
-	git remote add origin git@github.com:keymon/dotfiles.git
-	git fetch
-	git reset --hard origin/master
+	git --git-dir=.config.git init
+	git --git-dir=.config.git config --bool core.bare false
+	git --git-dir=.config.git remote add origin git@github.com:keymon/dotfiles.git
+	git --git-dir=.config.git fetch
+	git --git-dir=.config.git reset --hard origin/master
 	# get submodules, i.e. bash-it
-	git submodule init
-	git submodule update 
+	git --git-dir=.config.git submodule init
+	git --git-dir=.config.git submodule update
+	# Reload bash
+	exec bash -l
 
 NOTE: it will override your `.bashrc`, `.bash_profile`, etc
 
