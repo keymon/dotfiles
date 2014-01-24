@@ -15,6 +15,7 @@ In order to clone this there are 2 options, clone it to a repo and move it
 
 or this:
 
+	cd $HOME
 	git init --git-dir=.config.git
 	git remote add origin git@github.com:keymon/dotfiles.git
 	git fetch
