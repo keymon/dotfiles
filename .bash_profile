@@ -20,15 +20,14 @@ alias config='git --git-dir=$HOME/.config.git/ --work-tree=$HOME'
 export GIT_HOSTING='git@git.domain.com'
 
 # Set my editor and git editor
-export EDITOR="/usr/bin/mate -w"
-export GIT_EDITOR='/usr/bin/mate -w'
+export EDITOR="vi"
+export GIT_EDITOR='vi'
 
 # Set the path nginx
 export NGINX_PATH='/opt/nginx'
 
 # Don't check mail when opening terminal.
 unset MAILCHECK
-
 
 # Change this to your console based IRC client of choice.
 
@@ -44,3 +43,6 @@ export TODO="t"
 
 # Load Bash It
 source $BASH_IT/bash_it.sh
+
+# Load my own Bash It extensions
+source ./.my_bash_it/load_all.sh
