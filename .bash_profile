@@ -42,4 +42,4 @@ export TODO="t"
 source $BASH_IT/bash_it.sh
 
 # Load my own Bash extensions
-source ./.my_bash/load_all.sh
+source ~/.my_bash/load_all.sh
