@@ -21,6 +21,7 @@ or this:
 	git --git-dir=.config.git remote add origin git@github.com:keymon/dotfiles.git
 	git --git-dir=.config.git fetch
 	git --git-dir=.config.git reset --hard origin/master
+	git --git-dir=.config.git branch --set-upstream master origin/master
 	# get submodules, i.e. bash-it
 	git --git-dir=.config.git submodule init
 	git --git-dir=.config.git submodule update
