@@ -172,6 +172,9 @@ bindsym $mod+minus scratchpad show
 # Set Pidgin as floating
 for_window [class="Pidgin"] floating enable
 
+# Remove title on gnome-do
+for_window [class="^Do$" title="^Do$"]  border none
+
 # Workspace mapping
 workspace 1 output $monitor1 
 workspace 2 output $monitor2
@@ -179,3 +182,17 @@ workspace 3 output $monitor2
 workspace 4 output $monitor2
 
 assign [class="^Firefox$"] 1
+
+# Always tabbed 
+workspace_layout tabbed
+
+# Screen locking
+exec xautolock -time 10 -locker 'i3lock -c 000000' &
+bindsym Control+mod1+l exec i3lock -c 000000
+
+# Startup things
+exec --no-startup-id /usr/bin/gnome-settings-daemon
+exec --no-startup-id /usr/bin/gnome-do
+exec --no-startup-id /usr/bin/nautilus -n
+exec --no-startup-id ~/.screen_setup 
+exec --no-startup-id ~/.my_gsettings

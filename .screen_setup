@@ -1,0 +1,6 @@
+#!/bin/sh
+case $(hostname) in
+	keyplace*)
+		xrandr --output DVI-0 --left-of VGA-0
+	;;
+esac
