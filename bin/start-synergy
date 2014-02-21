@@ -1,0 +1,6 @@
+#!/bin/sh
+
+LOCATION=$(hostname)
+
+pkill synergys
+synergys -c ~/.synergy/${LOCATION}.synergy.conf
