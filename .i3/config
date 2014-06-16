@@ -33,7 +33,7 @@ bindsym Mod1+F4 kill
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
-bindsym $mod+l focus up
+#bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
@@ -188,7 +188,7 @@ workspace_layout tabbed
 
 # Screen locking
 exec xautolock -time 10 -locker 'i3lock -c 000000' &
-bindsym Control+mod1+l exec i3lock -c 000000
+bindsym $mod+l exec i3lock -c 000000
 
 # Startup things
 exec --no-startup-id /usr/bin/gnome-settings-daemon
