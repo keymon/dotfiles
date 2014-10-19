@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/Users/keymon/casper/infra/chef/site-cookbooks/icinga/files/default'
+let g:netrw_dirhist_2='/Users/keymon/casper/infra/infratasks'
+let g:netrw_dirhist_3='/Users/keymon/casper/infra'
+let g:netrw_dirhist_4='/Users/keymon/springer/chef_pe_repo/.chef'
+let g:netrw_dirhist_5='/Users/keymon/workspace/springerpe.github.io/about'
+let g:netrw_dirhist_6='/Users/keymon/springer/chef_isect_go_agent/.kitchen'
+let g:netrw_dirhist_7='/Users/keymon/workspace/psdoom-ng/trunk/psdoomctl-cf'
+let g:netrw_dirhist_8='/Users/keymon/casper/infra/chef/cookbooks'
+let g:netrw_dirhist_9='/Users/keymon/casper/infra/chef/nodes'
