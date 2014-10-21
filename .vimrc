@@ -54,6 +54,13 @@ set nobackup
 
 set mouse=a
 
+" expandtabs for python
+autocmd filetype python set expandtab
+
+" Show white chars
+" set list
+" set listchars=tab:>.,trail:.,extends:#,nbsp:.
+
 " clear the search with ,/
 nmap <silent> ,/ :nohlsearch<CR>
 
