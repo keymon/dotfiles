@@ -4,3 +4,6 @@
 [submodule ".nvie_vimrc"]
 	path = .nvie_vimrc
 	url = git@github.com:keymon/vimrc.git
+[submodule ".my_vimrc"]
+	path = .my_vimrc
+	url = git@github.com:keymon/vimrc.git
