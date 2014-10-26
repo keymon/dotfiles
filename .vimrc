@@ -1,1 +1,1 @@
-.nvie_vimrc/vimrc
+.my_vimrc/vimrc
