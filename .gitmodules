@@ -4,15 +4,3 @@
 [submodule ".nvie_vimrc"]
 	path = .nvie_vimrc
 	url = git@github.com:keymon/vimrc.git
-[submodule ".my_vim/vim/bundle/nercommenter"]
-	path = .my_vim/vim/bundle/nercommenter
-	url = https://github.com/scrooloose/nerdcommenter
-[submodule ".my_vim/vim/bundle/supertab"]
-	path = .my_vim/vim/bundle/supertab
-	url = https://github.com/ervandew/supertab
-[submodule ".my_vim/vim/bundle/vim-colors-solarized"]
-	path = .my_vim/vim/bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized
-[submodule ".my_vim/vim/bundle/vim-projectroot"]
-	path = .my_vim/vim/bundle/vim-projectroot
-	url = https://github.com/dbakker/vim-projectroot
