@@ -1,24 +1,6 @@
 [submodule ".bash_it"]
 	path = .bash_it
 	url = git@github.com:keymon/bash-it.git
-[submodule ".vim/bundle/command-t"]
-	path = .vim/bundle/command-t
-	url = https://github.com/wincent/command-t
-[submodule ".vim/bundle/minibufexpl.vim"]
-	path = .vim/bundle/minibufexpl.vim
-	url = https://github.com/fholgado/minibufexpl.vim
-[submodule ".vim/bundle/nerdcommenter"]
-	path = .vim/bundle/nerdcommenter
-	url = https://github.com/scrooloose/nerdcommenter
-[submodule ".vim/bundle/nerdtree"]
-	path = .vim/bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree
-[submodule ".vim/bundle/supertab"]
-	path = .vim/bundle/supertab
-	url = https://github.com/ervandew/supertab
-[submodule ".vim/bundle/vim-colors-solarized"]
-	path = .vim/bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized
-[submodule ".vim/bundle/vim-togglemouse"]
-	path = .vim/bundle/vim-togglemouse
-	url = https://github.com/nvie/vim-togglemouse
+[submodule ".nvie_vimrc"]
+	path = .nvie_vimrc
+	url = git@github.com:keymon/vimrc.git
