@@ -11,6 +11,7 @@ Installation
 In order to clone this there are 2 options, clone it to a repo and move it
 
 	git clone --git-dir=.config.git clone git@github.com:keymon/dotfiles.git dotfiles
+	git pull --recurse-submodules
 	cp dotfiles/* $HOME/; mv dotfiles/.??* $HOME 
 
 or this:
@@ -25,6 +26,7 @@ or this:
 	# get submodules, i.e. bash-it
 	git --git-dir=.config.git submodule init
 	git --git-dir=.config.git submodule update
+	git pull --recurse-submodules
 	# Reload bash
 	exec bash -l
 
@@ -40,6 +42,17 @@ As the blog recommends, add this alias to `.bash_rc` or load the `.my_bash`:
 	# Add bash completion for config
 	[ type _git > /dev/null 2>&1 ] && complete -o default -o nospace -F _git config
 
+Then just use the config command as usual:
+
+	config add -f file
+	config diff
+
+Update everything
+-----------------
+
+To download everything:
+
+	git pull --recurse-submodules
 
 Bash-it
 -------
