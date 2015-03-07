@@ -1,8 +1,15 @@
-# Support for docker-osx
-if which docker-osx &>/dev/null; then
-	# Add $DOCKER_HOST if localdocker is in /etc/hosts
-	grep -q localdocker /etc/hosts && export DOCKER_HOST="tcp://localdocker:4243"
-elif which boot2docker &>/dev/null; then
-	# export DOCKER_HOST=$(boot2docker cfg 2> /dev/null | awk '/LowerIP/ { gsub(/"/, "", $3); ip=$3 } /DockerPort/ { port=$3 }  END { print "tcp://" ip ":" port }')
-	export DOCKER_HOST=tcp://$(boot2docker ip 2> /dev/null):2375
-fi
+# Support for boot2docker
+boot2docker-shellinit() {
+	if which boot2docker &>/dev/null; then
+		$(boot2docker shellinit 2> /dev/null)
+		# In order to map the port, just use this. 
+		VBOX_MAP_PORT=$(VBoxManage showvminfo boot2docker-vm --machinereadable | sed -n 's/Forwarding.*docker,tcp,127.0.0.1,\(.*\),,2376.*/\1/p')
+		if [ ! -z "$VBOX_MAP_PORT" ]; then
+			export DOCKER_HOST=tcp://127.0.0.1:$VBOX_MAP_PORT
+			echo "Docker port is mapped in Virtual Box. Using localhost: DOCKER_HOST=$DOCKER_HOST"
+		fi
+	else 
+		echo "Not able to find boot2docker in the PATH, skipping"
+	fi
+}
+boot2docker-shellinit > /dev/null
