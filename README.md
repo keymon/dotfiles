@@ -1,7 +1,7 @@
 Versioned $HOME directory
 =========================
 
-This directory is versioned using git, but using  --git-dir=.config.git to avoid conflicts. 
+This directory is versioned using git, but using  --git-dir=.config.git to avoid conflicts.
 
 See http://robescriva.com/blog/2009/01/06/manage-your-home-with-git/ for more details
 
@@ -12,7 +12,7 @@ In order to clone this there are 2 options, clone it to a repo and move it
 
 	git clone --git-dir=.config.git clone git@github.com:keymon/dotfiles.git dotfiles
 	git pull --recurse-submodules
-	cp dotfiles/* $HOME/; mv dotfiles/.??* $HOME 
+	cp dotfiles/* $HOME/; mv dotfiles/.??* $HOME
 
 or this:
 
@@ -29,6 +29,10 @@ or this:
 	git pull --recurse-submodules
 	# Reload bash
 	exec bash -l
+
+or automated:
+
+	curl -qs https://raw.githubusercontent.com/keymon/dotfiles/master/.init_dotfiles_repo.sh | FORCE=1 bash -
 
 NOTE: it will override your `.bashrc`, `.bash_profile`, etc
 
@@ -58,11 +62,11 @@ Bash-it
 -------
 
 I am using bash-it  as git submodule. In order to keep it sync:
-	
+
 	git submodule init
 	git submodule update
- 
-Reference: 
+
+Reference:
 
 * https://github.com/keymon/bash-it
 * https://github.com/revans/bash-it
