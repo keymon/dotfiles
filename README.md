@@ -26,7 +26,9 @@ or this:
 	# get submodules, i.e. bash-it
 	git --git-dir=.config.git submodule init
 	git --git-dir=.config.git submodule update
-	git pull --recurse-submodules
+	git --git-dir=.config.git pull --recurse-submodules
+	# Local config
+	git --git-dir=.config.git config --local core.excludesfile ~/..configignore
 	# Reload bash
 	exec bash -l
 
@@ -34,7 +36,7 @@ or automated:
 
 	curl -qs https://raw.githubusercontent.com/keymon/dotfiles/master/.init_dotfiles_repo.sh | FORCE=1 bash -
 
-NOTE: it will override your `.bashrc`, `.bash_profile`, etc
+> **NOTE**: this will override your `.bashrc`, `.bash_profile`, etc
 
 Use it
 ------
