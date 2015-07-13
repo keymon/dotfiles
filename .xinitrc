@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# if we are on MacOSX, just stop here:
+if [ "$(uname -s)" == "Darwin" ]; then
+    while true; do sleep 60; done
+fi
+
 #settings
 xset -b
 xrdb -merge ~/.i3/xresources
