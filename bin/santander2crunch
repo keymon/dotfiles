@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# This scrupt converts the txt format of the statements from Santander UK
+# to csv format to upload to http://crunch.co.uk
+#
+# Usage:
+#  santander2crunch < statement.txt > statement.csv
+#
+
+echo date,description,amount,balance
+LC_CTYPE=C tr -d '\240\011' | \
+    awk '
+        BEGIN { FS=":" };
+        /Date:/ { date=$2 };
+        /Description:/ { desc=$2 };
+        /Amount:/ { amount=$2 };
+        /Balance:/ {
+            balance=$2;
+            print date ",\"" desc "\"," amount "," balance
+            };
+        ' | \
+    sed 's/[ \t]*,/,/g;s/ *\"/\"/g;s/\"[ \t]*/\"/g'
