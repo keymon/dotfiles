@@ -2,7 +2,8 @@
 
 # if we are on MacOSX, just stop here:
 if [ "$(uname -s)" == "Darwin" ]; then
-    while true; do sleep 60; done
+	quartz-wm
+	exit
 fi
 
 #settings
