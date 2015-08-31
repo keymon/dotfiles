@@ -6,3 +6,6 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific aliases and functions
+
+# Load my own Bash extensions
+source ~/.my_bash/load.sh
