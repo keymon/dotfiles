@@ -1,0 +1,99 @@
+[user]
+	name = Hector Rivas Gandara
+	email = keymon@gmail.com
+[alias]
+        a = add
+        c = clone
+        t = tag
+        au = add -u .
+        ap = add -p
+        br = branch -v
+        bl = blame
+        cl = clean
+        clf = clean --force
+        sh = show
+        sb = show-branch
+        ds = diff --stat
+        ls = ls-files
+        lo = log
+        st = status
+        co = checkout
+        cp = cherry-pick
+        ci = commit -v
+        df = diff
+        rb = rebase
+        rbc = rebase --continue
+        rbs = rebase --skip
+        rbi = rebase --interactive
+        me = merge
+        rs = remote show
+        sb = show-branch
+        pu = pull
+        pur = pull --rebase
+        pus = submodule foreach git pull origin master
+        purs = pull --recurse-submodules
+        pt = push --tags
+        w = whatchanged
+        dfs = diff --staged
+        sts = status -s
+        rl = reflog
+        ref = reflog
+        rst = reset
+        rt = remote
+        sm = submodule
+        sms = submodule status
+        smi = submodule init
+        smu = submodule update
+        smf = submodule foreach
+        rup = remote update
+        rpr = remote prune
+        cia = commit -v -a
+        com = checkout master
+        detach = checkout HEAD^0
+        info = config --list
+        summary = log --oneline
+        rank = shortlog -sn --no-merges
+        tree = log --graph --oneline --decorate
+        pom = push origin master
+        pob = !sh -c 'git push origin $(git branch -l 2> /dev/null | sed -e \"/^[^*]/d\" -e \"s/* \\(.*\\)/\\1/\")'
+        amend = commit --amend
+        last = log --oneline -10
+        review = log --stat=160,180 -p -w --patience --reverse -M -C -C -c
+        undo = reset --hard
+        lg1 = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+        lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+        lg = !"git lg1"
+        # From http://blogs.atlassian.com/2014/10/advanced-git-aliases/
+        # Show commits since last pull
+        new = log HEAD@{1}..HEAD@{0}
+        # Add uncommitted and unstaged changes to the last commit
+        caa = commit -a --amend -C HEAD
+        pickaxe = !"git log -p -S"
+        # show current hash
+        hash = log --pretty=format:'%h %H' -n 1
+
+[color]
+        branch = auto
+        diff = auto
+        status = auto
+        interactive = auto
+        ui = true
+        pager = true
+
+[pack]
+        threads = 0
+
+[rename]
+        limit = 0
+[merge]
+        log = true
+[core]
+        pager = less -FRSX
+	excludesfile = ~/.global_gitignore
+
+[push]
+        default = current
+
+[giggle]
+        main-window-maximized = true
+        main-window-view = HistoryView
