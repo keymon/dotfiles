@@ -11,8 +11,6 @@
 
 # Main modifier keu is Windows key
 set $mod Mod4
-set $monitor1 DVI-0
-set $monitor2 VGA-0
 
 # font for window titles. ISO 10646 = Unicode
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -43,7 +41,7 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # Try to simulate the alt+tab
-bindsym $mod+Shift+Tab focus left 
+bindsym $mod+Shift+Tab focus left
 bindsym $mod+Tab focus right
 
 bindsym Mod1+Tab exec /home/keymon/tools/simpleswitcher.i3/simpleswitcher -i3 -now -font "snap-10" -fg "#505050" -bg "#000000" -hlfg "#ffb964" -hlbg "#000000" -o 85
@@ -150,7 +148,7 @@ bindsym $mod+Control+Up resize grow height 10 px or 10 ppt
 bindsym $mod+Control+Down resize shrink height 10 px or 10 ppt
 bindsym $mod+Control+Right resize grow width 10 px or 10 ppt
 
- 
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -163,7 +161,10 @@ bindsym $mod+b bar hidden_state toggle
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
-bindsym $mod+x move workspace to output right
+bindsym $mod+Control+j move workspace to output up
+bindsym $mod+Control+k move workspace to output down
+bindsym $mod+Control+l move workspace to output right
+bindsym $mod+Control+h move workspace to output left
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
@@ -177,15 +178,7 @@ for_window [class="Pidgin"] floating enable
 # Remove title on gnome-do
 for_window [class="^Do$" title="^Do$"]  border none
 
-# Workspace mapping
-workspace 1 output $monitor1 
-workspace 2 output $monitor2
-workspace 3 output $monitor2
-workspace 4 output $monitor2
-
-assign [class="^Firefox$"] 1
-
-# Always tabbed 
+# Always tabbed
 workspace_layout tabbed
 
 # Screen locking
@@ -193,9 +186,10 @@ exec xautolock -time 10 -locker 'i3lock -c 000000' &
 bindsym $mod+l exec i3lock -c 000000
 
 # Startup things
+exec --no-startup-id xsetroot -solid black
+exec --no-startup-id nm-applet
 exec --no-startup-id /usr/bin/gnome-settings-daemon
 exec --no-startup-id /usr/bin/gnome-do
 exec --no-startup-id /usr/bin/nautilus -n
-exec --no-startup-id ~/.screen_setup 
 exec --no-startup-id ~/.my_gsettings
 exec --no-startup-id /usr/bin/easystroke
