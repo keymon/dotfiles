@@ -159,6 +159,8 @@ bar {
         modifier $mod
 }
 
+bindsym $mod+b bar hidden_state toggle
+
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
 bindsym $mod+x move workspace to output right
@@ -196,3 +198,4 @@ exec --no-startup-id /usr/bin/gnome-do
 exec --no-startup-id /usr/bin/nautilus -n
 exec --no-startup-id ~/.screen_setup 
 exec --no-startup-id ~/.my_gsettings
+exec --no-startup-id /usr/bin/easystroke
