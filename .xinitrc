@@ -55,6 +55,12 @@ fi
 #composition manager
 #compton --config ~/.i3/compton.conf &
 
+# Capslocks is Ctrl
+setxkbmap -option ctrl:nocaps
+
+# Make printsrc as Windows key to use with i3 in the thinkpad
+xmodmap -e "keycode 107 = Super_L"
+
 /usr/bin/gnome-settings-daemon &
 
 /usr/bin/gnome-do &
@@ -62,6 +68,7 @@ fi
 /usr/bin/nautilus -n &
 
 i3
+
 
 #getting rid of gpg agent
 [ -x $(which gpg-agent) ] && kill $(grep GPG_AGENT_INFO "$GPG_ENVFILE" | cut -d: -f 2) 2>/dev/null
