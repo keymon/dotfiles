@@ -69,6 +69,12 @@
         # Add uncommitted and unstaged changes to the last commit
         caa = commit -a --amend -C HEAD
         pickaxe = !"git log -p -S"
+        # Remove merged branches or branches not in the remote
+        clean-branches = !"git branch --merged | grep -v '\\*' | xargs -r -n 1 git branch -d && git remote | xargs -r -n1 git remote prune"
+        # List branches ordered by date
+        ls-branch = !git-ls-branch
+        # Pick a branch from a list of branches with the interactive tool peco
+        peco = !"git ls-branch | peco | head -n1 | awk '{print $4}' | sed 's/\\x1b\\[[0-9;]*m//g' | xargs -n1 git checkout"
         # show current hash
         hash = log --pretty=format:'%h %H' -n 1
 
@@ -97,3 +103,5 @@
 [giggle]
         main-window-maximized = true
         main-window-view = HistoryView
+[init]
+	templatedir = ~/.git-templates
