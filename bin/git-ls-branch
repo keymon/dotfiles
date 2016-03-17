@@ -2,7 +2,7 @@
 
 for ref in $(git for-each-ref --sort=-committerdate --format="%(refname)" refs/heads/ ); do
 	branch=${ref##refs/heads/}
-    git log -n1 $ref --pretty=format:"%Cgreen%cr:%Creset %C(yellow)${branch}%d%Creset %C(bold blue)<%an>%Creset%n" | cat ;
+    git log -n1 $ref --pretty=format:"%Cgreen%cr:%Creset%x09%C(yellow)${branch}%d%Creset %C(bold blue)<%an>%Creset%n" | cat ;
 done | awk '! a[$0]++'
 
 
@@ -11,7 +11,7 @@ for remote in $(git remote); do
 
 	for ref in $(git for-each-ref --sort=-committerdate --format="%(refname)" "refs/remotes/${remote}" ); do
 		branch=${ref##refs/remotes/${remote}/}
-		git log -n1 $ref --pretty=format:"%Cgreen%cr:%Creset %C(yellow)${branch}%d%Creset %C(bold blue)<%an>%Creset%n" | cat ;
+		git log -n1 $ref --pretty=format:"%Cgreen%cr:%Creset%x09%C(yellow)${branch}%d%Creset %C(bold blue)<%an>%Creset%n" | cat ;
 	done | awk '! a[$0]++'
 done
 
