@@ -164,8 +164,8 @@ bindsym $mod+b bar hidden_state toggle
 
 # Move the current workspace to the next output
 # (effectively toggles when you only have two outputs)
-bindsym $mod+Control+j move workspace to output up
-bindsym $mod+Control+k move workspace to output down
+bindsym $mod+Control+k move workspace to output up
+bindsym $mod+Control+j move workspace to output down
 bindsym $mod+Control+l move workspace to output right
 bindsym $mod+Control+h move workspace to output left
 
