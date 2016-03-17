@@ -56,6 +56,8 @@
         tree = log --graph --oneline --decorate
         pom = push origin master
         pob = !sh -c 'git push origin $(git branch -l 2> /dev/null | sed -e \"/^[^*]/d\" -e \"s/* \\(.*\\)/\\1/\")'
+        # Push origin force curreny branch
+        pof = !sh -c 'git push -f origin $(git rev-parse --abbrev-ref HEAD)'
         amend = commit --amend
         last = log --oneline -10
         review = log --stat=160,180 -p -w --patience --reverse -M -C -C -c
