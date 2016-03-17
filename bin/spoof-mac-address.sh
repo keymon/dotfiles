@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-iface=en0
+iface=wlan0
 mac_prefix="08:00:27"
 old_address=$(ifconfig $iface |grep ether | awk '{print $2}')
 new_address=${1:-$mac_prefix:$(openssl rand -hex 3 | sed 's/\(..\)/\1:/g; s/.$//')}
@@ -11,8 +11,8 @@ Changing MAC address of $iface from $old_address to $new_address.
 
 EOF
 
-echo "Running: sudo ifconfig en0 ether $new_address"
-sudo ifconfig en0 ether $new_address
+echo "Running: sudo ifconfig $iface ether $new_address"
+sudo ifconfig $iface ether $new_address
 
 echo $old_address > $save_file
 
