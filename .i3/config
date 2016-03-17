@@ -21,6 +21,9 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
+# start a terminal
+bindsym Control+space exec /usr/bin/gnome-do &
+
 # kill focused window
 bindsym $mod+Shift+Q kill
 bindsym Mod1+F4 kill
