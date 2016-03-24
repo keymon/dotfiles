@@ -8,34 +8,37 @@ MAIN_SCREEN_RESOLUTION=1920x1080
 #MAIN_SCREEN_RESOLUTION_AND_PANNING=$(xrandr | grep $MAIN_SCREEN | sed -n 's/.* \([0-9]\+x[0-9]\++[0-9]\++[0-9]\+\).*/\1/p')
 
 connected_screens() {
-	xrandr | sed -n 's/\([-a-zA-Z0-9]\+\) connected.*/\1/p' | grep -v "$MAIN_SCREEN" | xargs
+    xrandr | sed -n 's/\([-a-zA-Z0-9]\+\) connected.*/\1/p' | grep -v "$MAIN_SCREEN" | xargs
 }
 
 CONNECTED_SCREENS=$(connected_screens)
 
 if [ -z "$CONNECTED_SCREENS" ]; then
-	echo "No connected screens found"
+    echo "No connected screens found"
 else
-	for screen in $CONNECTED_SCREENS; do
-		echo "Configuring $screen:"
-		select MODE in mirror above; do
-			case $MODE in
-			mirror)
-				xrandr --output $screen --off
-				xrandr --output $screen --auto
-				xrandr --output $MAIN_SCREEN --primary --auto --same-as $screen --mode $MAIN_SCREEN_RESOLUTION
-			;;
-			above)
-				screen_resolution=$(xrandr | grep $screen | sed -n 's/.* \([0-9]\+x[0-9]\+\)+.*/\1/p')
-				xrandr --nograb --output $screen --mode $screen_resolution
-				# xrandr --nograb --output $screen --panning 0x0+0+0
-				xrandr --nograb --output $screen --panning $screen_resolution+0+0/0x0+0+0/0/0/0/-1200
-				xrandr --output $MAIN_SCREEN --primary --auto --below $screen --panning 0x0+0+0/0x0+0+0 # --auto
-			;;
-			esac
-			exit 0
-		done
-	done
+    for screen in $CONNECTED_SCREENS; do
+        echo "Configuring $screen:"
+        select MODE in mirror above off; do
+            case $MODE in
+            mirror)
+                xrandr --output $screen --off
+                xrandr --output $screen --auto
+                xrandr --output $MAIN_SCREEN --primary --auto --same-as $screen --mode $MAIN_SCREEN_RESOLUTION
+            ;;
+            above)
+                screen_resolution=$(xrandr | grep $screen | sed -n 's/.* \([0-9]\+x[0-9]\+\)+.*/\1/p')
+                xrandr --nograb --output $screen --mode $screen_resolution
+                # xrandr --nograb --output $screen --panning 0x0+0+0
+                xrandr --nograb --output $screen --panning $screen_resolution+0+0/0x0+0+0/0/0/0/-1200
+                xrandr --output $MAIN_SCREEN --primary --auto --below $screen --panning 0x0+0+0/0x0+0+0 # --auto
+            ;;
+            off)
+                xrandr --output $screen --off
+            ;;
+            esac
+            exit 0
+        done
+    done
 fi
 
 
