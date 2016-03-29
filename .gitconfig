@@ -107,3 +107,5 @@
         main-window-view = HistoryView
 [init]
 	templatedir = ~/.git-templates
+[color "diff"]
+	whitespace = red reverse
