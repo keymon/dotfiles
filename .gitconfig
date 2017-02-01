@@ -70,7 +70,7 @@
         new = log HEAD@{1}..HEAD@{0}
         # Add uncommitted and unstaged changes to the last commit
         caa = commit -a --amend -C HEAD
-        pickaxe = !"git log -p -S"
+        pickaxe = log -p -S
         # Remove merged branches or branches not in the remote
         clean-branches = !"git fetch -p && git branch --merged | grep -v '\\*' | xargs -r -n 1 git branch -d && git remote | xargs -r -n1 git remote prune"
         # List branches ordered by date
