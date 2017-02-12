@@ -109,3 +109,5 @@
 	templatedir = ~/.git-templates
 [color "diff"]
 	whitespace = red reverse
+[http]
+	cookiefile = /Users/keymon/.gitcookies
