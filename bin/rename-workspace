@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+set -u
+set -o pipefail
+
+current_prefix=$(
+    i3-msg -t get_workspaces \
+        | jq -r '.[] | select(.focused==true).name' | cut -f 1 -d :
+)
+
+echo $current_prefix
+
+i3-input -F "rename workspace to \"${current_prefix}: %s\"" -P 'New name: '
+
+
+
