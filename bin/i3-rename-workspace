@@ -11,7 +11,10 @@ current_prefix=$(
 
 echo $current_prefix
 
-i3-input -F "rename workspace to \"${current_prefix}: %s\"" -P 'New name: '
+i3-input \
+    -f "-misc-fixed-medium-r-normal--20-200-75-75-C-100-iso10646-1" \
+    -F "rename workspace to \"${current_prefix}: %s\"" \
+    -P 'New name: '
 
 
 
