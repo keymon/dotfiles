@@ -10,6 +10,7 @@ mmgaws() {
         ~/mmg/mmgaws/mmgaws $1 ${2:-admin}
     )
     AWS_ACCOUNT_NAME=$1
+    . ~/mmg/platform-credentials/.load.bash
 }
 
 
