@@ -115,4 +115,7 @@
 [color "diff"]
 	whitespace = red reverse
 [http]
-	cookiefile = /Users/keymon/.gitcookies
+        cookiefile = /Users/keymon/.gitcookies
+
+[rebase]
+	autosquash = true
