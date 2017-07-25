@@ -1,6 +1,6 @@
 [user]
-	name = Hector Rivas Gandara
-	email = keymon@gmail.com
+        name = Hector Rivas Gandara
+        email = keymon@gmail.com
 [alias]
         a = add
         c = clone
@@ -102,7 +102,7 @@
         log = true
 [core]
         pager = less -FRSX
-	excludesfile = ~/.global_gitignore
+        excludesfile = ~/.global_gitignore
 
 [push]
         default = current
@@ -111,11 +111,14 @@
         main-window-maximized = true
         main-window-view = HistoryView
 [init]
-	templatedir = ~/.git-templates
+        templatedir = ~/.git-templates
 [color "diff"]
-	whitespace = red reverse
+        whitespace = red reverse
 [http]
         cookiefile = /Users/keymon/.gitcookies
 
 [rebase]
-	autosquash = true
+        autosquash = true
+
+[include] 
+        path = ~/.gitconfig.local
