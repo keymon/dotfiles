@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-__my_rvm_ruby_version() {
+__my_rvm_prompt() {
   type __my_rvm_ruby_version > /dev/null 2>&1 || return
   echo -n " rb:"
   local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
@@ -9,6 +9,11 @@ __my_rvm_ruby_version() {
   echo "$version$gemset"
 }
 
+__my_rbenv_prompt() {
+  type rbenv > /dev/null 2>&1 || return
+  echo -n " rb:"
+  rbenv version 2>&1 | cut -f 1 -d " "
+}
 
 __my_gvm_prompt() {
   local gvm_version=${GVM_OVERLAY_PREFIX}
@@ -24,6 +29,7 @@ __my_nvm_prompt() {
   nvm current
 }
 
+
 __my_cf_prompt() {
   [ "${CF_HOME}" ] || return
   echo -n " cf:"
@@ -37,7 +43,7 @@ prompt_setter() {
 
   local scm_info=$(scm_prompt_info)
 
-  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_ruby_version)$(virtualenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
+  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
   local base_ps1="${green}\u${reset_color}@${yellow}\H${reset_color}:${cyan}\w${reset_color}\$"
 
   TITLEBAR="\033]0;${scm_info} \u@\H:\W\007"
