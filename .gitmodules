@@ -1,9 +1,9 @@
 [submodule ".bash_it"]
 	path = .bash_it
-	url = git@github.com:keymon/bash-it.git
+	url = https://github.com/keymon/bash-it.git
 [submodule ".my_vimrc"]
 	path = .my_vimrc
-	url = git@github.com:keymon/vimrc.git
+	url = https://github.com/keymon/vimrc.git
 [submodule ".nvm"]
 	path = .nvm
 	url = https://github.com/creationix/nvm
