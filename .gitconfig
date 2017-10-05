@@ -72,7 +72,7 @@
         caa = commit -a --amend -C HEAD
         pickaxe = log -p -S
         # Remove merged branches or branches not in the remote
-        clean-branches = !"git fetch -p && git branch --merged | grep -v '\\*' | xargs -r -n 1 git branch -d && git remote | xargs -r -n1 git remote prune"
+        clean-branches = !"git fetch -p && git branch --merged | grep -v '\\*' | xargs -n 1 git branch -D && git remote | xargs -n1 git remote prune"
         # List branches ordered by date
         ls-branch = !git-ls-branch
         # Pick a branch from a list of branches with the interactive tool peco
@@ -120,5 +120,5 @@
 [rebase]
         autosquash = true
 
-[include] 
+[include]
         path = ~/.gitconfig.local
