@@ -84,6 +84,11 @@
         fixupfile = "!f() { git commit --fixup=$(git log --all --full-history -1 --format=format:%h -- \"$1\") \"$@\";}; f"
         # Select the commit to fixup compared to master
         pecofix = !"git commit --fixup $(git log --oneline master..HEAD | peco | head -n1 | awk '{print $1}')"
+        # duet-rebase: Rebase reseting commiters with duet
+        duet-rebase = rebase --exec 'git duet-commit --amend --reset-author --no-edit'
+        # duet-rebase-rotate: Rebase reseting commiters with duet
+        duet-rebase-rotate = rebase --exec 'GIT_DUET_ROTATE_AUTHOR=1 git duet-commit --amend --reset-author --no-edit'
+
 
 [color]
         branch = auto
