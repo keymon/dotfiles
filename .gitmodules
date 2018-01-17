@@ -7,3 +7,6 @@
 [submodule ".nvm"]
 	path = .nvm
 	url = https://github.com/creationix/nvm
+[submodule "local/i3-volume"]
+	path = local/i3-volume
+	url = https://github.com/hastinbe/i3-volume.git
