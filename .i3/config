@@ -229,3 +229,6 @@ set $volumestep 5
 bindsym XF86AudioRaiseVolume exec $volumepath/volume -i $volumestep -n -t $statuscmd -u $statussig
 bindsym XF86AudioLowerVolume exec $volumepath/volume -d $volumestep -n -t $statuscmd -u $statussig
 bindsym XF86AudioMute exec $volumepath/volume -m -n -t $statuscmd -u $statussig
+
+# Configure screen switch key
+bindsym XF86Display exec ~/bin/monitor-mode switch

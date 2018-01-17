@@ -1,0 +1,75 @@
+#!/bin/bash
+
+set -eu
+set -x
+set -o pipefail
+
+# Based on code from https://faq.i3wm.org/question/5312/how-to-toggle-onoff-external-and-internal-monitors.1.html
+INTERNAL_OUTPUT="LVDS-1"
+STATE_FILE="${HOME}/.monitor-mode.state"
+
+get_external_output() {
+  xrandr | grep " connected" | cut -f 1 -d " " | (grep -v "${INTERNAL_OUTPUT}" || true) | head -n 1
+}
+
+
+set_mode() {
+  if [ -z "${EXTERNAL_OUTPUT}" ]; then
+    xrandr --auto
+    return
+  fi
+  case "${monitor_mode}" in
+    all)
+      xrandr \
+        --output "${INTERNAL_OUTPUT}" --auto \
+        --output "${EXTERNAL_OUTPUT}" --auto --above "${INTERNAL_OUTPUT}"
+    ;;
+    external-only)
+      xrandr \
+        --output "${INTERNAL_OUTPUT}" --off \
+        --output "${EXTERNAL_OUTPUT}" --auto
+    ;;
+    internal-only)
+      xrandr \
+        --output "${INTERNAL_OUTPUT}" --auto \
+        --output "${EXTERNAL_OUTPUT}" --off
+    ;;
+    clone)
+      xrandr \
+        --output "${INTERNAL_OUTPUT}" --auto \
+        --output "${EXTERNAL_OUTPUT}" --auto --same-as "${INTERNAL_OUTPUT}"
+    ;;
+  esac
+}
+
+switch_mode() {
+  case "${monitor_mode}" in
+    all)
+      monitor_mode=external-only
+    ;;
+    external-only)
+      monitor_mode=internal-only
+    ;;
+    internal-only)
+      monitor_mode=clone
+    ;;
+    clone)
+      monitor_mode=all
+    ;;
+  esac
+}
+
+# if we don't have a file, start at zero
+if [ ! -f "${STATE_FILE}" ] ; then
+  monitor_mode="all"
+else
+  monitor_mode="$(cat ${STATE_FILE})"
+  if [ "${1:-}" == "switch" ]; then
+    switch_mode
+  fi
+fi
+
+EXTERNAL_OUTPUT="$(get_external_output)"
+
+set_mode
+echo "${monitor_mode}" > "${STATE_FILE}"
