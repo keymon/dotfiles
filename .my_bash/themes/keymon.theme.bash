@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
 __my_rvm_prompt() {
-  type __my_rvm_ruby_version > /dev/null 2>&1 || return
-  echo -n " rb:"
-  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-  [ "$gemset" != "" ] && gemset="@$gemset"
-  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-  echo "$version$gemset"
+	if type rvm-prompt > /dev/null 2>&1; then
+		echo -n " rb:"
+		rvm-prompt | sed 's/ruby-//'
+	else
+		type __my_rvm_ruby_version > /dev/null 2>&1 || return
+		echo -n " rb:"
+		local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
+		[ "$gemset" != "" ] && gemset="@$gemset"
+		local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
+		echo "$version$gemset"
+	fi
 }
 
 __my_rbenv_prompt() {
