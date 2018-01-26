@@ -34,8 +34,7 @@ if [ -x "${GPG_AGENT}" ] ; then
 	${GPG_AGENT} -s \
 	--enable-ssh-support \
 	--daemon \
-	--pinentry-program ${PINENTRY_PROGRAM} \
-	--write-env-file ${GPG_AGENT_INFO_FILE}
+	--pinentry-program ${PINENTRY_PROGRAM}
     )"
 
 	#--log-file "${HOME}/.gnupg/gpg.log" \
