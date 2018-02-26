@@ -203,6 +203,7 @@ exec --no-startup-id /usr/bin/gnome-do
 exec --no-startup-id /usr/bin/nautilus -n
 exec --no-startup-id ~/.my_gsettings
 exec --no-startup-id /usr/bin/easystroke
+exec --no-startup-id ~/bin/srandrd ~/bin/monitor-mode
 
 ## Volume control
 
