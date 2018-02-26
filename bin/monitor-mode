@@ -1,17 +1,21 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(dirname $0)"
+
 set -eu
-set -x
 set -o pipefail
 
 # Based on code from https://faq.i3wm.org/question/5312/how-to-toggle-onoff-external-and-internal-monitors.1.html
-INTERNAL_OUTPUT="LVDS-1"
+INTERNAL_OUTPUT="LVDS-1-1"
 STATE_FILE="${HOME}/.monitor-mode.state"
 
 get_external_output() {
   xrandr | grep " connected" | cut -f 1 -d " " | (grep -v "${INTERNAL_OUTPUT}" || true) | head -n 1
 }
 
+notify() {
+  notify-send -u critical --icon "${SCRIPT_DIR}"/monitor-mode.png "$@" || true
+}
 
 set_mode() {
   if [ -z "${EXTERNAL_OUTPUT}" ]; then
@@ -23,21 +27,25 @@ set_mode() {
       xrandr \
         --output "${INTERNAL_OUTPUT}" --auto \
         --output "${EXTERNAL_OUTPUT}" --auto --above "${INTERNAL_OUTPUT}"
+      notify "Mode: Multiple screens"
     ;;
     external-only)
       xrandr \
         --output "${INTERNAL_OUTPUT}" --off \
         --output "${EXTERNAL_OUTPUT}" --auto
+      notify "Mode: External only"
     ;;
     internal-only)
       xrandr \
         --output "${INTERNAL_OUTPUT}" --auto \
         --output "${EXTERNAL_OUTPUT}" --off
+      notify "Mode: Laptop only"
     ;;
     clone)
       xrandr \
         --output "${INTERNAL_OUTPUT}" --auto \
         --output "${EXTERNAL_OUTPUT}" --auto --same-as "${INTERNAL_OUTPUT}"
+      notify "Mode: Clone screens"
     ;;
   esac
 }
