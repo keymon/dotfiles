@@ -8,4 +8,4 @@ fi
 # User specific aliases and functions
 
 # Load my own Bash extensions
-source ~/.my_bash/load.sh
+[ -n "$PS1" ] && source ~/.my_bash/load.sh
