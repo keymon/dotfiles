@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Name=i3-mate
+Exec=/home/keymon/.i3/i3-start.sh

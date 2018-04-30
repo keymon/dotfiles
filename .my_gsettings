@@ -1,4 +1,0 @@
-#!/bin/sh
-
-# disable nautilus desktop
-gsettings set org.gnome.desktop.background show-desktop-icons false
