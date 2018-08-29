@@ -185,6 +185,8 @@ bindsym $mod+minus scratchpad show
 # Set Pidgin as floating
 for_window [class="Pidgin"] floating enable
 for_window [title="^WhatsApp"] floating enable
+for_window [title="^Telegram Web"] floating enable
+for_window [title="^Event Tester"] floating enable
 
 # Remove title on gnome-do
 for_window [class="^Do$" title="^Do$"]  border none
