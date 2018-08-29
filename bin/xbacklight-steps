@@ -1,0 +1,20 @@
+#!/bin/sh
+if [ -z "$1" ]; then
+    echo "$0 <inc|dec>"
+    exit 1
+fi
+current_backlight="$(xbacklight | cut -f 1 -d .)"
+
+if [ "$current_backlight" -lt 4 ]; then
+    inc=1
+    time=20
+elif [ "$current_backlight" -le 10 ]; then
+    inc=2
+    time=40
+else
+    inc=10
+    time=200
+fi
+
+xbacklight -$1 $inc -time $time
+xbacklight
