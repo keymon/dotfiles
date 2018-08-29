@@ -118,7 +118,7 @@
 [init]
         templatedir = ~/.git-templates
 [color "diff"]
-        whitespace = red reverse
+	whitespace = red reverse
 [http]
         cookiefile = /Users/keymon/.gitcookies
 
@@ -127,3 +127,5 @@
 
 [include]
         path = ~/.gitconfig.local
+[diff]
+	wsErrorHighlight = all
