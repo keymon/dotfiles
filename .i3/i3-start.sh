@@ -19,5 +19,8 @@ xrdb -merge ~/.Xresources
 # Configure keyboard mapping
 xmodmap ~/.Xmodmap
 
+# Disable the touch screen
+xinput set-prop 12 "Device Enabled" 0
+
 # Start i3
 i3
