@@ -1,0 +1,8 @@
+#!/bin/bash
+dp=${1:-DP1}
+
+xrandr --output ${dp}  --off
+# xrandr --output eDP1 --auto  --panning 3840x2160+0+0 --fb 3840x2160
+xrandr --output eDP1 --auto --panning 3840x2160+0+2160 --output ${dp} --auto --scale 2x2 --above eDP1 --fb 3840x4320 --panning 3840x2160+0+0
+xrandr --output ${dp}   --scale 2x2
+
