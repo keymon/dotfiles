@@ -28,6 +28,17 @@ __my_gvm_prompt() {
   echo "${gvm_version:+ go:${gvm_version}}"
 }
 
+__my_goenv_prompt() {
+  if [ -f "$HOME/.goenv/version" ] && which goenv > /dev/null 2>&1; then
+    goenv_version="$(goenv version | cut -f 1 -d ' ')"
+    # note that is a local version
+    if ! goenv version | grep -q $HOME/.goenv/version; then
+      goenv_version="./${goenv_version}"
+    fi
+  fi
+  echo "${goenv_version:+ go:${goenv_version}}"
+}
+
 __my_nvm_prompt() {
   type nvm > /dev/null 2>&1 || return
   echo -n " node:"
@@ -48,7 +59,7 @@ prompt_setter() {
 
   local scm_info=$(scm_prompt_info)
 
-  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
+  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
   local base_ps1="${green}\u${reset_color}@${yellow}\H${reset_color}:${cyan}\w${reset_color}\$"
 
   TITLEBAR="\033]0;${scm_info} \u@\H:\W\007"
