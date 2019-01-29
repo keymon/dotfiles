@@ -59,7 +59,7 @@ prompt_setter() {
 
   local scm_info=$(scm_prompt_info)
 
-  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
+  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}${AWS_VAULT:+ aws:${AWS_VAULT}}"
   local base_ps1="${green}\u${reset_color}@${yellow}\H${reset_color}:${cyan}\w${reset_color}\$"
 
   TITLEBAR="\033]0;${scm_info} \u@\H:\W\007"
