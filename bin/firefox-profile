@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ -n "${FIREFOX_PROFILE}" ]; then
+    firefox -P "${FIREFOX_PROFILE}" -new-tab $@
+else
+    firefox -new-tab $@
+fi
