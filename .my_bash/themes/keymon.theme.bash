@@ -1,5 +1,16 @@
 #!/usr/bin/env bash
 
+# My own colors to be safe of poluted variables
+__prompt_black="\[\e[0;30m\]"
+__prompt_red="\[\e[0;31m\]"
+__prompt_green="\[\e[0;32m\]"
+__prompt_yellow="\[\e[0;33m\]"
+__prompt_blue="\[\e[0;34m\]"
+__prompt_purple="\[\e[0;35m\]"
+__prompt_cyan="\[\e[0;36m\]"
+__prompt_white="\[\e[0;37m\]"
+__prompt_orange="\[\e[0;91m\]"
+
 __my_rvm_prompt() {
 	if type rvm-prompt > /dev/null 2>&1; then
 		echo -n " rb:"
@@ -55,12 +66,12 @@ __my_cf_prompt() {
 prompt_setter() {
   local return_code=$?
   local return_color
-  [ "z${return_code}" == "z0" ] && return_color="" || return_color=$red
+  [ "z${return_code}" == "z0" ] && return_color="" || return_color="${__prompt_red}"
 
   local scm_info=$(scm_prompt_info)
 
-  local head_ps1="${return_color:-${green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}${AWS_VAULT:+ aws:${AWS_VAULT}}"
-  local base_ps1="${green}\u${reset_color}@${yellow}\H${reset_color}:${cyan}\w${reset_color}\$"
+  local head_ps1="${return_color:-${__prompt_green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}${AWS_VAULT:+ aws:${AWS_VAULT}}"
+  local base_ps1="${__prompt_green}\u${reset_color}@${__prompt_yellow}\H${reset_color}:${__prompt_cyan}\w${reset_color}\$"
 
   TITLEBAR="\033]0;${scm_info} \u@\H:\W\007"
 
