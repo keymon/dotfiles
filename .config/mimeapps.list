@@ -1,7 +1,7 @@
 [Default Applications]
-text/html=firefox-profile.desktop
-x-scheme-handler/http=firefox-profile.desktop
-x-scheme-handler/https=firefox-profile.desktop
+text/html=firefox.desktop
+x-scheme-handler/http=firefox.desktop
+x-scheme-handler/https=firefox.desktop
 x-scheme-handler/about=firefox-profile.desktop
 x-scheme-handler/unknown=firefox-profile.desktop
 x-scheme-handler/webcal=google-chrome.desktop
@@ -22,12 +22,6 @@ application/octet-stream=vim.desktop;
 application/pdf=gvim.desktop;acroread.desktop;
 x-scheme-handler/http=firefox.desktop;
 x-scheme-handler/https=firefox.desktop;
-x-scheme-handler/ftp=firefox.desktop;
-x-scheme-handler/chrome=firefox.desktop;
 text/html=firefox.desktop;
-application/x-extension-htm=firefox.desktop;
-application/x-extension-html=firefox.desktop;
-application/x-extension-shtml=firefox.desktop;
-application/xhtml+xml=firefox.desktop;
-application/x-extension-xhtml=firefox.desktop;
-application/x-extension-xht=firefox.desktop;
+text/csv=gvim.desktop;
+text/plain=gvim.desktop;
