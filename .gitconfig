@@ -29,7 +29,7 @@
         rs = remote show
         sb = show-branch
         pu = pull
-        pur = pull --rebase
+        pur = pull --rebase --autostash
         pus = submodule foreach git pull origin master
         purs = pull --recurse-submodules
         pt = push --tags
@@ -81,14 +81,18 @@
         hash = log --pretty=format:'%h %H' -n 1
         # Fixup the changes of a given file with the latest commit that changed it
         # Trick for positional args: https://stackoverflow.com/a/3322412/395686
-        fixupfile = "!f() { git commit --fixup=$(git log --all --full-history -1 --format=format:%h -- \"$1\") \"$@\";}; f"
+        fixupfile = "!f() { git commit --fixup=$(git log --full-history -1 --format=format:%h -- \"$1\") \"$@\";}; f"
         # Select the commit to fixup compared to master
         pecofix = !"git commit --fixup $(git log --oneline master..HEAD | peco | head -n1 | awk '{print $1}')"
         # duet-rebase: Rebase reseting commiters with duet
         duet-rebase = rebase --exec 'git duet-commit --amend --reset-author --no-edit'
         # duet-rebase-rotate: Rebase reseting commiters with duet
         duet-rebase-rotate = rebase --exec 'GIT_DUET_ROTATE_AUTHOR=1 git duet-commit --amend --reset-author --no-edit'
+        # Clone github PR code
+        pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
 
+        # pull master and rebase current branch
+        mpur = !"git fetch origin && git branch -f master origin/master && git rebase -p master --autostash"
 
 [color]
         branch = auto
