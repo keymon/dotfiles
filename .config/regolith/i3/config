@@ -581,6 +581,8 @@ bindsym $mod+l exec $i3-wm.program.lock
 
 ## Session // Exit App // Alt+F4 ##
 bindsym Mod1+F4 [con_id="__focused__"] kill
+## Session // Exit App // <> q ##
+bindsym $mod+q [con_id="__focused__"] kill
 
 ## Modify // Display Settings // <DisplayKey> ##
 set_from_resource $i3-wm.program.display i3-wm.program.display gnome-control-center display
