@@ -25,3 +25,4 @@ x-scheme-handler/https=firefox.desktop;
 text/html=firefox.desktop;
 text/csv=gvim.desktop;
 text/plain=gvim.desktop;
+application/json=gvim.desktop;
