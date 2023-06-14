@@ -70,12 +70,12 @@ prompt_setter() {
 
   local scm_info=$(scm_prompt_info)
 
-  local head_ps1="${return_color:-${__prompt_green}}\\\$?=${return_code} \t${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}${AWS_VAULT:+ aws:${AWS_VAULT}}"
+  local head_ps1="${return_color:-${__prompt_green}}\\\$?=${return_code}${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}${AWS_VAULT:+ aws:${AWS_VAULT}}"
   local base_ps1="${__prompt_green}\u${reset_color}@${__prompt_yellow}\H${reset_color}:${__prompt_cyan}\w${reset_color}\$"
 
-  TITLEBAR="\033]0;${scm_info} \u@\H:\W\007"
+  TITLEBAR="\[\033]0;\]${scm_info} \u@\H:\W\[\007\]"
 
-  PS1="$TITLEBAR${head_ps1}\n${base_ps1} "
+  PS1="${TITLEBAR}${head_ps1}\n${base_ps1} "
   PS2='> '
   PS4='+ '
 
