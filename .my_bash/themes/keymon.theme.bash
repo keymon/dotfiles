@@ -63,17 +63,44 @@ __my_cf_prompt() {
   basename "${CF_HOME}" 2> /dev/null
 }
 
-prompt_setter() {
+# https://github.com/dylanaraps/pure-bash-bible#get-the-current-cursor-position
+# https://unix.stackexchange.com/a/647881
+new_line_ps1() {
+  IFS='[;' read -p $'\e[6n' -d R -rs _ y x _
+  if [[ "$x" != 1 ]]; then
+    printf "\n${__prompt_yellow}^^ no newline at end of output ^^\n${reset_color}"
+  fi
+}
+# print a new line if the prompt is to long.
+# workaround for the wrapping problem I had using new line
+new_line_long_path() {
+  local possible_prompt="${USER}@$(hostname):$(pwd)\$ "
+
+  if [[ "$(echo "$possible_prompt"|wc -c)" -ge "$(tput cols)" ]]; then
+    echo " ${__prompt_red}↵${reset_color}\n\$"
+  fi
+}
+
+
+prompt_command() {
   local return_code=$?
   local return_color
   [ "z${return_code}" == "z0" ] && return_color="" || return_color="${__prompt_red}"
 
   local scm_info=$(scm_prompt_info)
 
-  local head_ps1="${return_color:-${__prompt_green}}\\\$?=${return_code}${reset_color}${scm_info}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(virtualenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}${AWS_VAULT:+ aws:${AWS_VAULT}}"
-  local base_ps1="${__prompt_green}\u${reset_color}@${__prompt_yellow}\H${reset_color}:${__prompt_cyan}\w${reset_color}\$"
+  local head_ps1=""
+  head_ps1="${head_ps1}$(new_line_ps1)"
+  head_ps1="${head_ps1}${return_color:-${__prompt_green}}\\\$?=${return_code}${reset_color}"
+  head_ps1="${head_ps1}${scm_info}"
+  head_ps1="${head_ps1}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}"
+  head_ps1="${head_ps1}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
+  head_ps1="${head_ps1}${AWS_PROFILE:+ aws:${AWS_PROFILE}}"
 
-  TITLEBAR="\[\033]0;\]${scm_info} \u@\H:\W\[\007\]"
+  local base_ps1="${__prompt_green}\u${reset_color}@${__prompt_yellow}\H${reset_color}:${__prompt_cyan}\w${reset_color}$"
+  base_ps1="${base_ps1}$(new_line_long_path)"
+
+  TITLEBAR="\[\033]0;${scm_info} \u@\H:\W\007\]"
 
   PS1="${TITLEBAR}${head_ps1}\n${base_ps1} "
   PS2='> '
@@ -86,9 +113,14 @@ prompt_setter() {
   history -r
 }
 
-PROMPT_COMMAND=prompt_setter
+# PROMPT_COMMAND=prompt_setter
+PROMPT_COMMAND=prompt_command
 
+# safe_append_prompt_command prompt_command
+
+SCM_THEME_PROMPT_DIRTY_COLOR=" ${__prompt_red}✗${reset_color}"
 SCM_THEME_PROMPT_DIRTY=" ✗"
+SCM_THEME_PROMPT_CLEAN_COLOR=" ${__prompt_green}✓${reset_color}"
 SCM_THEME_PROMPT_CLEAN=" ✓"
 SCM_THEME_PROMPT_PREFIX=" ("
 SCM_THEME_PROMPT_SUFFIX=")"

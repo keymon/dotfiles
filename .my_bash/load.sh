@@ -3,6 +3,8 @@
 # Path to the bash it configuration
 export BASH_IT=$HOME/.bash_it
 
+export BASH_IT_THEME=${HOME}/.my_bash/themes/keymon.theme.bash
+
 # Load Bash It
 source $BASH_IT/bash_it.sh
 
@@ -13,5 +15,4 @@ for file_type in "aliases" "completion" "plugins" "custom"; do
 	done
 done
 
-# Load my own theme
-. ~/.my_bash/themes/keymon.theme.bash
+
