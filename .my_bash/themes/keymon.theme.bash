@@ -73,6 +73,21 @@ new_line_ps1() {
 }
 # print a new line if the prompt is to long.
 # workaround for the wrapping problem I had using new line
+#
+# Actually the problem is only on bash 5.0
+#
+# To test:
+#
+# docker run -ti bash:5.0-alpine3.18
+# PROMPT_COMMAND=
+# PS1="header of prompt...\n and a long long long long long long long long long long long long long long long long long long long long long long long long long long long long prompt after the newline$ "
+#
+# vs
+#
+# docker run -ti bash:5.1-alpine3.18
+# PROMPT_COMMAND=
+# PS1="header of prompt...\n and a long long long long long long long long long long long long long long long long long long long long long long long long long long long long prompt after the newline$ "
+#
 new_line_long_path() {
   local possible_prompt="${USER}@$(hostname):$(pwd)\$ "
 
