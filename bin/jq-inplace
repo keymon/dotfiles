@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 <args> <file>" 2>&1
+    exit 1
+fi
+
+file="${!#}"
+
+# Remove the last argument from the positional parameters
+set -- "${@:1:$(($#-1))}"
+
+tmpfile="$(mktemp)"
+trap 'rm -f $tmpfile' EXIT
+cat "$file" | jq "$@" > "$tmpfile"
+mv -f "$tmpfile" "$file"
+
