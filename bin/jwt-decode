@@ -1,0 +1,3 @@
+#!/bin/bash
+jq -R '[split(".")[0,1]]|map(@base64d|fromjson)'
+

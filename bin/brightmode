@@ -1,0 +1,13 @@
+#!/bin/sh
+
+case $1 in
+night)
+    sct 2700
+    brightnessctl s 1%
+;;
+day)
+    sct
+    brightnessctl s 100%
+;;
+esac
+

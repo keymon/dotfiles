@@ -1,0 +1,2 @@
+#!/bin/bash
+xinput set-button-map 14 1 1 3

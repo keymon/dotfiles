@@ -1,0 +1,7 @@
+cd  /var/lib/shim-signed/mok/
+openssl x509 -in MOK.der -inform DER -outform PEM -out /tmp/MOK.pem
+sbsign --key MOK.priv --cert /tmp/MOK.pem /boot/vmlinuz-5.4.0-050400-generic --output /boot/vmlinuz-5.4.0-050400-generic.signed
+sudo sbsign --key MOK.priv --cert /tmp/MOK.pem /boot/vmlinuz-5.4.0-050400-generic --output /boot/vmlinuz-5.4.0-050400-generic.signed
+# sudo vim /boot/grub/grub.cfg
+sudo grub-install
+
