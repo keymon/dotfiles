@@ -26,3 +26,4 @@ text/html=firefox.desktop;
 text/csv=gvim.desktop;
 text/plain=gvim.desktop;
 application/json=gvim.desktop;
+video/mp4=vlc.desktop;

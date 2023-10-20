@@ -96,7 +96,6 @@ new_line_long_path() {
   fi
 }
 
-
 prompt_command() {
   local return_code=$?
   local return_color
@@ -105,10 +104,10 @@ prompt_command() {
   local scm_info=$(scm_prompt_info)
 
   local head_ps1=""
-  head_ps1="${head_ps1}$(new_line_ps1)"
+  # head_ps1="${head_ps1}$(new_line_ps1)"
   head_ps1="${head_ps1}${return_color:-${__prompt_green}}\\\$?=${return_code}${reset_color}"
   head_ps1="${head_ps1}${scm_info}"
-  head_ps1="${head_ps1}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)${reset_color}"
+  head_ps1="${head_ps1}$(__my_rvm_prompt)$(__my_rbenv_prompt)$(__my_goenv_prompt)$(__my_gvm_prompt)$(__my_nvm_prompt)$(__my_cf_prompt)$(virtualenv_prompt)${reset_color}"
   head_ps1="${head_ps1}${AWS_ACCOUNT_NAME:+ aws:${AWS_ACCOUNT_NAME}}"
   head_ps1="${head_ps1}${AWS_PROFILE:+ aws:${AWS_PROFILE}}"
 
