@@ -94,6 +94,8 @@
         # pull master and rebase current branch
         mpur = !"git fetch origin && git branch -f master origin/master && git rebase -p master --autostash"
 
+        whatever = !"git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
+
 [color]
         branch = auto
         diff = auto
