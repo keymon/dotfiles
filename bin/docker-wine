@@ -1,0 +1,136 @@
+#!/bin/bash
+
+# Run docker with just X11 support
+docker_run () {
+    docker run -it \
+    --rm \
+    --env="DISPLAY" \
+    --volume="${XAUTHORITY}:/root/.Xauthority:ro" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:ro" \
+    --volume="/etc/localtime:/etc/localtime:ro" \
+    --volume="winehome:/home/wineuser" \
+    --volume="$HOME/tmp/docker-wine:/$HOME/tmp/docker-wine" \
+    --hostname="winecellar" \
+    --name="wine" \
+    $DOCKER_IMAGE "$@"
+}
+
+
+# Run docker with X11 and audio support
+docker_run_with_audio () {
+    docker run -it \
+    --rm \
+    --env="DISPLAY" \
+    --volume="${XAUTHORITY}:/root/.Xauthority:ro" \
+    --volume="/tmp/.X11-unix:/tmp/.X11-unix:ro" \
+    --volume="/tmp/pulse-socket:/tmp/pulse-socket" \
+    --volume="/etc/localtime:/etc/localtime:ro" \
+    --volume="winehome:/home/wineuser" \
+    --volume="$HOME/tmp/docker-wine:$HOME/tmp/docker-wine" \
+    --hostname="winecellar" \
+    --name="wine" \
+    $DOCKER_IMAGE "$@"
+}
+
+
+# Run docker on macOS with X11 over TCP socket
+docker_run_on_mac () {
+    docker run -it \
+    --rm \
+    --env="DISPLAY=host.docker.internal:0" \
+    --volume="winehome:/home/wineuser" \
+    --hostname="winecellar" \
+    --name="wine" \
+    $DOCKER_IMAGE "$@"
+}
+
+
+USE_DOCKER_IMAGE="true"
+DOCKER_IMAGE=${DOCKER_IMAGE:-"scottyhardy/docker-wine:latest"}
+
+case $1 in
+    --local)
+        shift
+        echo "INFO: Running locally built docker-wine image"
+        USE_DOCKER_IMAGE="false"
+        ;;
+    --help)
+        echo "Usage: $0 [--local] [command] [arguments]..."
+        echo "e.g."
+        echo "    $0"
+        echo "    $0 wine notepad.exe"
+        echo "    $0 wineboot --init"
+        echo "    $0 --local"
+        echo "    $0 --local wine explorer.exe"
+        exit 0
+        ;;
+esac
+
+# Grab the latest image from docker hub or use the locally built version
+if [ $USE_DOCKER_IMAGE == "true" ]; then
+    docker pull $DOCKER_IMAGE
+else
+    DOCKER_IMAGE="docker-wine"
+fi
+
+if ! docker volume ls -qf "name=winehome" | grep -q "winehome"; then
+    echo "INFO: Creating Docker volume container 'winehome'..."
+    docker volume create winehome
+else
+    echo "INFO: Using existing Docker volume container 'winehome'..."
+fi
+
+# Check if running on a Mac
+if [ `uname` == "Darwin" ]; then
+    # Check XQuartz installed
+    if ! which xquartz >/dev/null 2>&1; then
+        echo "ERROR: XQuartz does not appear to be installed"
+        exit 1
+    fi
+
+    # Allow localhost to access XQuartz if required
+    if ! xhost | grep "INET:localhost" >/dev/null 2>&1; then
+        echo "WARNING: Adding localhost to authorized xhost clients"
+        xhost + 127.0.0.1
+    fi
+
+    docker_run_on_mac "$@"
+else
+    # $XAUTHORITY overrides default location of .Xauthority
+    if [ -z $XAUTHORITY ]; then
+        if [ -s "${HOME}/.Xauthority" ]; then
+            export XAUTHORITY="${HOME}/.Xauthority"
+        else
+            echo "ERROR: No valid .Xauthority file found for X11"
+            exit 1
+        fi
+    fi
+
+    # Use audio if PulseAudio is installed
+    if which pulseaudio >/dev/null 2>&1; then
+        # One-off setup for creation of UNIX socket for PulseAudio to allow access for other users
+        if [ ! -f "${HOME}/.config/pulse/default.pa" ]; then
+            echo "INFO: Creating PulseAudio config file ${HOME}/.config/pulse/default.pa"
+            mkdir -p "${HOME}/.config/pulse"
+            echo -e ".include /etc/pulse/default.pa\nload-module module-native-protocol-unix auth-anonymous=1 socket=/tmp/pulse-socket" > ${HOME}/.config/pulse/default.pa
+        fi
+
+        if [ ! -e "/tmp/pulse-socket" ]; then
+            # Restart PulseAudio daemon to ensure the UNIX socket is created
+            echo "INFO: No socket found for PulseAudio so restarting service..."
+            pulseaudio -k
+            pulseaudio --start
+            sleep 1
+        fi
+
+        if [ -e "/tmp/pulse-socket" ]; then
+            docker_run_with_audio "$@"
+        else
+            echo "INFO: PulseAudio socket /tmp/pulse-socket doesn't exist, so sound will not function"
+            docker_run "$@"
+        fi
+    else
+        echo "INFO: PulseAudio not installed so running without sound"
+        docker_run "$@"
+    fi
+fi

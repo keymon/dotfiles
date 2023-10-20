@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# watch cgroup 'browsers' memory activity
+#
+# best served with ...
+#
+# https://gist.github.com/jakewarren/477ecd1149abe908cbd5cf7a7c9abaa3
+
+self=$0
+SUDO=
+uid=$(id -u)
+[ $uid = 0 ] || SUDO=sudo
+
+CGROUP=browsers
+
+die() { echo >&2 "$@" ; exit 1 ; }
+
+do_single() {
+   local cgroup=$1
+   cd /sys/fs/cgroup/memory/$cgroup/ 
+   echo "[memory/$cgroup]"
+   grep . memory.{usage_in_bytes,max_usage_in_bytes,soft_limit_in_bytes,limit_in_bytes,failcnt} | column -t -s:
+   echo
+   cd /sys/fs/cgroup/cpu/$cgroup/ 
+   echo "[cpu/$cgroup]"
+   grep . cpu.{cfs_period_us,cfs_quota_us} | column -t -s:
+   cat cpu.stat | column -t
+}
+do_watch() {
+   $SUDO watch -n1 -d $self --group "$CGROUP" --single
+}
+
+do_help() {
+   cat <<END
+${self#*/} ...
+
+ -h --help                      this help
+ -g --group <name>              cgroup to use (default is browsers)
+ -w --watch                     watch mode
+ -1 --single                    show once, exit
+
+END
+   exit 0
+}
+
+if [[ "${#@}" == 0 ]] ; then
+   do_watch
+   exit 0
+fi
+
+while [[ "${1:0:1}" == '-' ]] ; do
+   cmd=$1 ; shift
+   case $cmd in
+      -h|--help) do_help;;
+      -g|--group) CGROUP=$1 ; shift ;;
+      -w|--watch) do_watch;;
+      -1|--single) do_single $CGROUP;;
+      -*) die "unknown option $cmd"
+   esac
+done

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if test -n "$BROWSER"; then
+   echo  ${BROWSER} "$@"
+fi
+
+/usr/bin/firefox -new-tab "$@"
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo 3 | sudo tee /sys/class/leds/tpacpi::kbd_backlight/brightness
+

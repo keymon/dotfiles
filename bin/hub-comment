@@ -1,0 +1,108 @@
+#!/bin/bash
+
+__restore='\033[0m'
+__red='\033[00;31m'
+__green='\033[00;32m'
+__yellow='\033[00;33m'
+
+say_info() {
+  (echo -e "${__lgreen}INFO:${__restore} $@") 1>&2
+}
+
+say_warning() {
+  (echo -e "${__lyellow}WARNING:${__restore} $@") 1>&2
+}
+
+say_error() {
+  (echo -e "${__lred}CRITICAL:${__restore} $@") 1>&2
+}
+
+set -e -o pipefail
+
+hub_add_verbatim_comment() {
+  local org="$1"
+  local repo="$2"
+  local pr="$3"
+  local title="$4"
+  local body
+  body="$(
+    [ -z "${title}" ] || echo -e "${title}:\n\n\`\`\`\n"
+    cat - | sed 's/\x1B\[[0-9;]\+[A-Za-z]//g'
+    echo -e "\n\`\`\`"
+  )"
+  echo "$body" | hub_add_comment "${org}" "${repo}" "$pr"
+}
+
+hub_add_collapsible_verbatim_comment() {
+  local org="$1"
+  local repo="$2"
+  local pr="$3"
+  local title="$4"
+  local body
+  body="$(
+    echo -e "<details>\n<summary>\n${title}\n\n</summary>\n\n\`\`\`\n"
+    cat - | sed 's/\x1B\[[0-9;]\+[A-Za-z]//g'
+    echo -e "\n\`\`\`\n<details>\n"
+  )"
+  echo "$body" | hub_add_comment "${org}" "${repo}" "$pr"
+}
+
+hub_add_comment() {
+  local org="$1"
+  local repo="$2"
+  local pr="$3"
+  local body
+  body="$(cat -)"
+  if response="$(
+    hub api "repos/${org}/${repo}/issues/${pr}/comments" --input <(
+      echo "$body" | jq --slurp --raw-input '{body: .}'
+    )
+  )"; then
+    say_info "Comment added in $(echo "${response}" | jq .html_url)"
+  else
+    say_error "Error adding comment:\n${response}"
+  fi
+}
+
+
+get_pr() {
+  local branch
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+  (
+  hub pr list -f "%I%n" -h "${branch}" -s all | sed -n 1p
+  )
+}
+
+get_repo_info() {
+  org="$(git remote -v  | sed -n 's|.*:\([^/]*\)/.*\.git.*(fetch)|\1|p')"
+  repo="$(git remote -v  | sed -n 's|.*/\(.*\)\.git.*(fetch)|\1|p')"
+  pr="$(get_pr)"
+}
+
+usage() {
+  cat 1>&2 <<EOF
+Usage:
+
+  cmd | ${SCRIPT_NAME} <normal|verbatim>
+EOF
+  exit 1
+}
+
+case "${1:-}" in
+  normal)
+    get_repo_info
+    hub_add_comment "${org}" "${repo}" "${pr}"
+  ;;
+  long-verbatim)
+    get_repo_info
+    hub_add_collapsible_verbatim_comment "${org}" "${repo}" "${pr}" "${2:-raw data}"
+  ;;
+  verbatim)
+    get_repo_info
+    hub_add_verbatim_comment "${org}" "${repo}" "${pr}" "${2:-}"
+  ;;
+  *)
+    usage
+  ;;
+esac
+
