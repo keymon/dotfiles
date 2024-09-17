@@ -1,0 +1,137 @@
+# Reference: https://github.com/i3/i3/blob/next/etc/config
+
+enable-normalization-flatten-containers = false
+enable-normalization-opposite-orientation-for-nested-containers = false
+
+# All possible keys:
+# - Letters.        a, b, c, ..., z
+# - Numbers.        0, 1, 2, ..., 9
+# - Keypad numbers. keypad0, keypad1, keypad2, ..., keypad9
+# - F-keys.         f1, f2, ..., f20
+# - Special keys.   minus, equal, period, comma, slash, backslash, quote, semicolon, backtick,
+#                   leftSquareBracket, rightSquareBracket, space, enter, esc, backspace, tab
+# - Keypad special. keypadClear, keypadDecimalMark, keypadDivide, keypadEnter, keypadEqual,
+#                   keypadMinus, keypadMultiply, keypadPlus
+# - Arrows.         left, down, up, right
+
+# All possible modifiers: cmd, alt, ctrl, shift
+
+# All possible commands: https://nikitabobko.github.io/AeroSpace/commands
+
+
+[mode.main.binding]
+alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
+# open up terminal with alt + enter shortcut (like in i3)
+# See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
+#alt-enter = '''exec-and-forget osascript -e '
+#    tell application "Terminal"
+#        do script
+#        activate
+#    end tell'
+#'''
+
+alt-left = 'focus left'
+alt-right = 'focus right'
+alt-down = 'focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+alt-up = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
+
+alt-shift-left = 'move-through left'
+alt-shift-right = 'move-through right'
+alt-shift-down = 'move-through down'
+alt-shift-up = 'move-through up'
+
+alt-h = 'split horizontal'
+alt-v = 'split vertical'
+
+alt-f = 'fullscreen'
+
+alt-s = 'layout v_accordion' # 'layout stacking' in i3
+alt-w = 'layout h_accordion' # 'layout tabbed' in i3
+alt-e = 'layout list horizontal vertical' # 'layout toggle split' in i3
+alt-d = 'layout v_tiles' # 'layout stacking' in i3
+alt-c = 'layout h_tiles' # 'layout tabbed' in i3
+
+alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+
+# Not supported, because this command is redundant in AeroSpace mental model.
+# See: https://github.com/nikitabobko/AeroSpace/blob/main/docs/guide.md#floating-windows
+#alt-space = 'focus toggle_tiling_floating'
+
+# `focus parent`/`focus child` are not yet supported, and it's not clear whether they should be supported at all
+# https://github.com/nikitabobko/AeroSpace/issues/5
+# alt-a = 'focus parent'
+
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+alt-0 = 'workspace 10'
+
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+alt-shift-3 = 'move-node-to-workspace 3'
+alt-shift-4 = 'move-node-to-workspace 4'
+alt-shift-5 = 'move-node-to-workspace 5'
+alt-shift-6 = 'move-node-to-workspace 6'
+alt-shift-7 = 'move-node-to-workspace 7'
+alt-shift-8 = 'move-node-to-workspace 8'
+alt-shift-9 = 'move-node-to-workspace 9'
+alt-shift-0 = 'move-node-to-workspace 10'
+
+alt-ctrl-left = 'workspace prev'
+alt-ctrl-right = 'workspace next'
+alt-ctrl-up = 'focus-monitor up'
+alt-ctrl-down = 'focus-monitor down'
+
+alt-ctrl-shift-up = 'move-workspace-to-monitor --wrap-around prev'
+alt-ctrl-shift-down = 'move-workspace-to-monitor --wrap-around next'
+
+alt-shift-c = 'reload-config'
+
+alt-r = 'mode resize'
+
+
+
+[mode.resize.binding]
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+enter = 'mode main'
+esc = 'mode esc'
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+# Possible values:
+# - Constant:     gaps.outer.top = 8
+# - Per monitor:  gaps.outer.top = [{ monitor.main = 16 }, { monitor."some-pattern" = 32 }, 24]
+#                 In this example, 24 is a default value when there is no match.
+#                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
+#                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[gaps]
+inner.horizontal = 0
+inner.vertical =   0
+outer.left =       0
+outer.bottom =     0
+outer.top =        0
+outer.right =      0
+
+
+#
+# aerospace list-windows --all --format '{ "window_id": %{window-id}, "app_name": "%{app-name}", "window_title": "%{window-title}", "app_bundle_id": "%{app-bundle-id}", "app_pid": %{app-pid}, "workspace": "%{workspace}", "monitor_id": %{monitor-id}, "monitor_name": "%{monitor-name}" }' | jq -s .
+#
+
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+check-further-callbacks = true
+run = ['layout floating']  # The callback itself
+
+[[on-window-detected]]
+if.window-title-regex-substring = 'Extension: .Checker Plus for Google Calendar.* - .*'
+check-further-callbacks = true
+run = ['layout floating']  # The callback itself
