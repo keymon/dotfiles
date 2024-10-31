@@ -1,5 +1,6 @@
 # Reference: https://github.com/i3/i3/blob/next/etc/config
 
+start-at-login = true
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 
@@ -18,9 +19,53 @@ enable-normalization-opposite-orientation-for-nested-containers = false
 
 # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
+#####
 
+after-startup-command = [
+    # Run Sketchybar together with AeroSpace
+    # sketchbar has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    'exec-and-forget sketchybar',
+    # JankyBorders has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    # DISABLED: Weird colours in Ventura
+    # 'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=00000000 width=2.0'
+    #
+    # Configure iTerm2 to open new windows in new windows, not tabs
+    'exec-and-forget defaults write com.googlecode.iterm2 OpenFileInNewWindows -bool true'
+]
+
+
+# Notify Sketchybar about workspace change
+exec-on-workspace-change = [
+    '/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+on-focus-changed = [
+  'move-mouse window-lazy-center',
+  'exec-and-forget /bin/bash -c /opt/homebrew/bin/sketchybar --trigger front_app_switched',
+  'exec-and-forget sketchybar --trigger update_windows'
+]
+
+####
 [mode.main.binding]
-alt-enter = 'exec-and-forget open -n /System/Applications/Utilities/Terminal.app'
+# alt-enter = 'exec-and-forget open -a /System/Applications/Utilities/Terminal.app ~'
+alt-enter = 'exec-and-forget open -a /Applications/iTerm.app ~'
+alt-space = 'exec-and-forget /Users/keymon/bin/aerospace-choose.sh'
+# Lock script
+cmd-l = 'exec-and-forget osascript -e "tell application \"System Events\" to keystroke \"q\" using {control down, command down}"'
+
+# toogle mute zoom
+alt-m = 'exec-and-forget /Users/keymon/bin/mute-zoom.sh'
+# Focus to zoom
+alt-z = 'exec-and-forget /Users/keymon/bin/aerospace-focus-app.sh zoom'
+
+alt-shift-s = 'exec-and-forget screencapture -i -c'
+
+# Try to override cmd-tab to focus-back-and-forth, but does not work, cannot override this
+# cmd-tab = 'focus-back-and-forth'
+
 # open up terminal with alt + enter shortcut (like in i3)
 # See: https://nikitabobko.github.io/AeroSpace/commands#exec-and-forget
 #alt-enter = '''exec-and-forget osascript -e '
@@ -52,6 +97,7 @@ alt-d = 'layout v_tiles' # 'layout stacking' in i3
 alt-c = 'layout h_tiles' # 'layout tabbed' in i3
 
 alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
+alt-shift-f = 'layout floating tiling' # 'floating toggle' in i3
 
 # Not supported, because this command is redundant in AeroSpace mental model.
 # See: https://github.com/nikitabobko/AeroSpace/blob/main/docs/guide.md#floating-windows
@@ -95,7 +141,10 @@ alt-shift-c = 'reload-config'
 
 alt-r = 'mode resize'
 
-
+ctrl-shift-left = 'resize width -50'
+ctrl-shift-up = 'resize height +50'
+ctrl-shift-down = 'resize height -50'
+ctrl-shift-right = 'resize width +50'
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -117,7 +166,7 @@ inner.horizontal = 0
 inner.vertical =   0
 outer.left =       0
 outer.bottom =     0
-outer.top =        0
+outer.top =        [{ monitor.main = 0 }, 32]
 outer.right =      0
 
 
@@ -125,13 +174,19 @@ outer.right =      0
 # aerospace list-windows --all --format '{ "window_id": %{window-id}, "app_name": "%{app-name}", "window_title": "%{window-title}", "app_bundle_id": "%{app-bundle-id}", "app_pid": %{app-pid}, "workspace": "%{workspace}", "monitor_id": %{monitor-id}, "monitor_name": "%{monitor-name}" }' | jq -s .
 #
 
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+check-further-callbacks = true
+run = ['move-node-to-workspace 10']
 
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
 check-further-callbacks = true
-run = ['layout floating']  # The callback itself
+run = ['layout floating']
 
 [[on-window-detected]]
 if.window-title-regex-substring = 'Extension: .Checker Plus for Google Calendar.* - .*'
 check-further-callbacks = true
-run = ['layout floating']  # The callback itself
+run = ['layout floating']
+
+
