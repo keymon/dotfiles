@@ -1,0 +1,35 @@
+# Extensions/Plugins (proprietary, often binary)
+extensions/
+
+# Personal chat history
+chats/
+
+# Personal project state
+projects/
+
+# IDE state (window positions, open files, etc.)
+ide_state.json
+
+# Personal prompt history
+prompt_history.json
+
+# Personal repository list
+unified_repo_list.json
+
+# Personal blocklist
+blocklist
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# MCP config files
+mcp.json
+
+# Only share these config files:
+# - cli-config.json (CLI settings)
+# - argv.json (runtime arguments/config)
+
