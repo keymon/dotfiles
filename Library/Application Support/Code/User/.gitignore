@@ -1,0 +1,26 @@
+# Personal/cached data and extension storage
+globalStorage/
+workspaceStorage/
+History/
+
+# State databases (personal session data)
+state.vscdb
+state.vscdb.backup
+state.vscdb-shm
+state.vscdb-wal
+
+# Storage file (personal workspace data)
+storage.json
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Only share these config files:
+# - settings.json (editor settings, vim config, theme, etc.)
+# - keybindings.json (custom keybindings)
+# - snippets/ (custom code snippets)
+

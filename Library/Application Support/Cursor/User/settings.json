@@ -1,0 +1,66 @@
+{
+    "gitlens.heatmap.locations": [
+        "gutter",
+        "overview"
+    ],
+    "zenMode.fullScreen": false,
+    "zenMode.centerLayout": false,
+    "zenMode.showTabs": "none",
+    "editor.renderWhitespace": "all",
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "always"
+    },
+    "editor.foldingImportsByDefault": true,
+    "editor.mouseWheelZoom": true,
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "editor.tabCompletion": "on",
+    "editor.wordWrapColumn": 120,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnType": true,
+    "vim.leader": ",",
+    "files.autoSaveWhenNoErrors": true,
+    "files.hotExit": "onExitAndWindowClose",
+    "files.simpleDialog.enable": true,
+    "workbench.settings.useSplitJSON": true,
+    "git.verboseCommit": true,
+    "git.openRepositoryInParentFolders": "always",
+    "files.trimTrailingWhitespace": true,
+    "editor.tabSize": 2,
+    "makefile.configureOnOpen": false,
+    "editor.formatOnPaste": true,
+    "files.associations": {
+        "*.hcl": "terraform",
+        "*.tf": "terraform"
+    },
+    "[terraform]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file"
+    },
+    "[terraform-vars]": {
+        "editor.defaultFormatter": "hashicorp.terraform",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file"
+    },
+    "[go]": {
+        "editor.insertSpaces": true,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "golang.go"
+    },
+    "chat.editing.alwaysSaveWithGeneratedChanges": true,
+    "go.toolsManagement.autoUpdate": true,
+    "security.workspace.trust.untrustedFiles": "open",
+    "git.autofetch": true,
+    "editor.minimap.enabled": true,
+    "githubPullRequests.pullBranch": "never",
+    "cursor.cpp.disabledLanguages": [],
+    "security.promptForLocalFileProtocolHandling": false,
+    "workbench.colorTheme": "Solarized Dark+ (High Contrast)",
+    "gitlens.ai.model": "gitkraken",
+    "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash"
+}
