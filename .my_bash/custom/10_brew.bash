@@ -1,1 +1,1 @@
-test -d /opt/homebrew && export PATH=$PATH:/opt/homebrew/bin
+test -d /opt/homebrew && export PATH=/opt/homebrew/bin:$PATH

@@ -61,7 +61,9 @@ alt-m = 'exec-and-forget /Users/keymon/bin/mute-zoom.sh'
 # Focus to zoom
 alt-z = 'exec-and-forget /Users/keymon/bin/aerospace-focus-app.sh zoom'
 
-alt-shift-s = 'exec-and-forget screencapture -i -c'
+alt-shift-s = [
+    'exec-and-forget /opt/homebrew/bin/aerospace list-windows --all --format "%{window-id}%{workspace}%{app-bundle-id}" --json >~/.config/aerospace/scripts/layout.json'
+]
 
 # Try to override cmd-tab to focus-back-and-forth, but does not work, cannot override this
 # cmd-tab = 'focus-back-and-forth'
@@ -136,8 +138,11 @@ alt-ctrl-down = 'focus-monitor down'
 
 alt-ctrl-shift-up = 'move-workspace-to-monitor --wrap-around prev'
 alt-ctrl-shift-down = 'move-workspace-to-monitor --wrap-around next'
+alt-ctrl-shift-left = 'move-workspace-to-monitor --wrap-around prev'
+alt-ctrl-shift-right = 'move-workspace-to-monitor --wrap-around next'
 
 alt-shift-c = 'reload-config'
+alt-shift-p = 'enable toggle'
 
 alt-r = 'mode resize'
 
@@ -145,6 +150,7 @@ ctrl-shift-left = 'resize width -50'
 ctrl-shift-up = 'resize height +50'
 ctrl-shift-down = 'resize height -50'
 ctrl-shift-right = 'resize width +50'
+
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -179,14 +185,18 @@ if.app-id = 'com.spotify.client'
 check-further-callbacks = true
 run = ['move-node-to-workspace 10']
 
-[[on-window-detected]]
-if.app-id = 'net.whatsapp.WhatsApp'
-check-further-callbacks = true
-run = ['layout floating']
+# [[on-window-detected]]
+# if.app-id = 'net.whatsapp.WhatsApp'
+# check-further-callbacks = true
+# run = ['layout floating']
 
 [[on-window-detected]]
 if.window-title-regex-substring = 'Extension: .Checker Plus for Google Calendar.* - .*'
 check-further-callbacks = true
-run = ['layout floating']
+run = ['layout floating', 'move-node-to-workspace 1']
 
+[[on-window-detected]]
+if.app-id = 'us.zoom.xos'
+check-further-callbacks = true
+run = ['move-node-to-workspace 9']
 
