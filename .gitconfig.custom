@@ -62,7 +62,7 @@
         pom = push origin master
         pob = !sh -c 'git push origin $(git branch -l 2> /dev/null | sed -e \"/^[^*]/d\" -e \"s/* \\(.*\\)/\\1/\")'
         # Push origin force curreny branch
-        pof = !sh -c 'git push --force-with-lease origin $(git rev-parse --abbrev-ref HEAD)'
+        pof = !"export PATH=/usr/local/libexec/airlock-agent:$PATH; git push --force-with-lease origin $(git rev-parse --abbrev-ref HEAD)"
         amend = commit --amend
         last = log --oneline -10
         review = log --stat=160,180 -p -w --patience --reverse -M -C -C -c
@@ -97,7 +97,7 @@
         pr = "!f() { git fetch origin pull/$1/head:pr-$1 && git checkout pr-$1; }; f"
 
         # pull master and rebase current branch
-        mpur = !"git fetch origin && git branch -f master origin/master && git rebase -p master --autostash"
+        mpur = !"export PATH=/usr/local/libexec/airlock-agent:$PATH; git fetch origin && git branch -f master origin/master && git rebase --rebase-merges master --autostash"
 
         whatever = !"git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD) $(git rev-parse --abbrev-ref HEAD)"
 
