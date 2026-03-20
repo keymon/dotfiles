@@ -60,7 +60,16 @@
     "githubPullRequests.pullBranch": "never",
     "cursor.cpp.disabledLanguages": [],
     "security.promptForLocalFileProtocolHandling": false,
-    "workbench.colorTheme": "Solarized Dark+ (High Contrast)",
     "gitlens.ai.model": "gitkraken",
-    "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash"
+    "gitlens.ai.gitkraken.model": "gemini:gemini-2.0-flash",
+    "sync.gist": "57246038dd47dc67b25293e7943311d0",
+    "diffEditor.renderSideBySide": true,
+    "workbench.editor.enablePreview": false,
+    "[yaml]": {
+        "diffEditor.ignoreTrimWhitespace": false
+    },
+    "markdown-preview-enhanced.enablePreviewZenMode": false,
+    "markdown-preview-enhanced.revealjsTheme": "simple.css",
+    "workbench.colorTheme": "Solarized Dark+",
+    "claudeCode.preferredLocation": "sidebar"
 }

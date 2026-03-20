@@ -1,35 +1,43 @@
-# Extensions/Plugins (proprietary, often binary)
-extensions/
-
-# Personal chat history
-chats/
-
-# Personal project state
-projects/
-
-# IDE state (window positions, open files, etc.)
-ide_state.json
-
-# Personal prompt history
-prompt_history.json
-
-# Personal repository list
-unified_repo_list.json
-
-# Personal blocklist
-blocklist
-
-# Logs
-*.log
-
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# MCP config files
-mcp.json
-
-# Only share these config files:
-# - cli-config.json (CLI settings)
-# - argv.json (runtime arguments/config)
-
+# Ignore everything in .cursor
+*
+# Un-ignore projects so we can descend to allowlisted subdirs
+!projects/
+projects/*
+!projects/*/
+projects/*/*
+# MCP tool descriptors, resources, prompts
+!projects/*/mcps/
+!projects/*/mcps/**
+# Agent transcripts for citation
+!projects/*/agent-transcripts/
+!projects/*/agent-transcripts/**
+# Terminal output files
+!projects/*/terminals/
+!projects/*/terminals/**
+# Conversation notes (shared scratchpad)
+!projects/*/agent-notes/
+!projects/*/agent-notes/**
+# Large tool output files
+!projects/*/agent-tools/
+!projects/*/agent-tools/**
+# Plugin cache (rules, skills, agents)
+!plugins/
+!plugins/**
+# Built-in Cursor skills
+!skills-cursor/
+!skills-cursor/**
+# User's personal skills
+!skills/
+!skills/**
+# User's personal slash commands
+!commands/
+!commands/**
+# User's plan files
+!plans/
+!plans/**
+# Subagent state/transcripts
+!subagents/
+!subagents/**
+# User-level cursor rules
+!rules/
+!rules/**
