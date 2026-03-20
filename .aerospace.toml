@@ -28,9 +28,7 @@ after-startup-command = [
     'exec-and-forget sketchybar',
     # JankyBorders has a built-in detection of already running process,
     # so it won't be run twice on AeroSpace restart
-    # DISABLED: Weird colours in Ventura
-    # 'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=00000000 width=2.0'
-    #
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0x00000000 width=1.0',
     # Configure iTerm2 to open new windows in new windows, not tabs
     'exec-and-forget defaults write com.googlecode.iterm2 OpenFileInNewWindows -bool true'
 ]
@@ -39,7 +37,7 @@ after-startup-command = [
 # Notify Sketchybar about workspace change
 exec-on-workspace-change = [
     '/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+    'sketchybar --trigger aerospace_workspace_changed FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE; /Users/keymon/bin/aerospace-osd-workspace.sh $AEROSPACE_FOCUSED_WORKSPACE'
 ]
 
 on-focus-changed = [
@@ -51,19 +49,17 @@ on-focus-changed = [
 ####
 [mode.main.binding]
 # alt-enter = 'exec-and-forget open -a /System/Applications/Utilities/Terminal.app ~'
-alt-enter = 'exec-and-forget open -a /Applications/iTerm.app ~'
-alt-space = 'exec-and-forget /Users/keymon/bin/aerospace-choose.sh'
-# Lock script
-cmd-l = 'exec-and-forget osascript -e "tell application \"System Events\" to keystroke \"q\" using {control down, command down}"'
 
-# toogle mute zoom
-alt-m = 'exec-and-forget /Users/keymon/bin/mute-zoom.sh'
-# Focus to zoom
-alt-z = 'exec-and-forget /Users/keymon/bin/aerospace-focus-app.sh zoom'
-
+# @section Actions
+alt-shift-h = 'exec-and-forget /bin/bash /Users/keymon/bin/aerospace-help-osd.sh'  # This help
+alt-enter = 'exec-and-forget open -a /Applications/iTerm.app ~'  # New terminal
+alt-space = 'exec-and-forget /Users/keymon/bin/aerospace-choose.sh'  # Window chooser
+cmd-l = 'exec-and-forget osascript -e "tell application \"System Events\" to keystroke \"q\" using {control down, command down}"'  # Lock screen
+alt-m = 'exec-and-forget /Users/keymon/bin/mute-zoom.sh'  # Mute Zoom
+alt-z = 'exec-and-forget /Users/keymon/bin/aerospace-focus-app.sh zoom'  # Focus Zoom
 alt-shift-s = [
     'exec-and-forget /opt/homebrew/bin/aerospace list-windows --all --format "%{window-id}%{workspace}%{app-bundle-id}" --json >~/.config/aerospace/scripts/layout.json'
-]
+]  # Save layout
 
 # Try to override cmd-tab to focus-back-and-forth, but does not work, cannot override this
 # cmd-tab = 'focus-back-and-forth'
@@ -77,29 +73,30 @@ alt-shift-s = [
 #    end tell'
 #'''
 
+# @section Navigation
+# @group Alt ←→↑↓    Focus window
 alt-left = 'focus left'
 alt-right = 'focus right'
 alt-down = 'focus down --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
 alt-up = 'focus up --boundaries all-monitors-outer-frame --boundaries-action wrap-around-all-monitors'
-
+# @group Alt Shift ←→↑↓    Move window
 alt-shift-left = 'move-through left'
 alt-shift-right = 'move-through right'
 alt-shift-down = 'move-through down'
 alt-shift-up = 'move-through up'
 
-alt-h = 'split horizontal'
-alt-v = 'split vertical'
-
-alt-f = 'fullscreen'
-
-alt-s = 'layout v_accordion' # 'layout stacking' in i3
-alt-w = 'layout h_accordion' # 'layout tabbed' in i3
-alt-e = 'layout list horizontal vertical' # 'layout toggle split' in i3
-alt-d = 'layout v_tiles' # 'layout stacking' in i3
-alt-c = 'layout h_tiles' # 'layout tabbed' in i3
-
-alt-shift-space = 'layout floating tiling' # 'floating toggle' in i3
-alt-shift-f = 'layout floating tiling' # 'floating toggle' in i3
+# @section Layout
+alt-h = 'split horizontal'  # Split horizontal
+alt-v = 'split vertical'  # Split vertical
+alt-f = 'fullscreen'  # Fullscreen
+alt-s = 'layout v_accordion'  # V-accordion
+alt-w = 'layout h_accordion'  # H-accordion
+alt-e = 'layout list horizontal vertical'  # Toggle split h/v
+alt-d = 'layout v_tiles'  # V-tiles
+alt-c = 'layout h_tiles'  # H-tiles
+alt-shift-f = 'layout floating tiling'  # Toggle floating
+alt-shift-t = 'flatten-workspace-tree'  # Flatten tree
+alt-shift-space = 'layout floating tiling'
 
 # Not supported, because this command is redundant in AeroSpace mental model.
 # See: https://github.com/nikitabobko/AeroSpace/blob/main/docs/guide.md#floating-windows
@@ -109,6 +106,8 @@ alt-shift-f = 'layout floating tiling' # 'floating toggle' in i3
 # https://github.com/nikitabobko/AeroSpace/issues/5
 # alt-a = 'focus parent'
 
+# @section Workspaces
+# @group Alt 1-9, 0    Workspace 1-10
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
@@ -120,6 +119,7 @@ alt-8 = 'workspace 8'
 alt-9 = 'workspace 9'
 alt-0 = 'workspace 10'
 
+# @group Alt Shift 1-9, 0    Move to workspace 1-10
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
@@ -131,21 +131,24 @@ alt-shift-8 = 'move-node-to-workspace 8'
 alt-shift-9 = 'move-node-to-workspace 9'
 alt-shift-0 = 'move-node-to-workspace 10'
 
+# @section Monitors
+# @group Alt Ctrl ←→    Prev/Next workspace
 alt-ctrl-left = 'workspace prev'
 alt-ctrl-right = 'workspace next'
+# @group Alt Ctrl ↑↓    Focus monitor
 alt-ctrl-up = 'focus-monitor up'
 alt-ctrl-down = 'focus-monitor down'
-
+# @group Alt Ctrl Shift ←→↑↓    Move WS to monitor
 alt-ctrl-shift-up = 'move-workspace-to-monitor --wrap-around prev'
 alt-ctrl-shift-down = 'move-workspace-to-monitor --wrap-around next'
 alt-ctrl-shift-left = 'move-workspace-to-monitor --wrap-around prev'
 alt-ctrl-shift-right = 'move-workspace-to-monitor --wrap-around next'
 
-alt-shift-c = 'reload-config'
-alt-shift-p = 'enable toggle'
-
-alt-r = 'mode resize'
-
+# @section Config & Resize
+alt-shift-c = 'reload-config'  # Reload config
+alt-shift-p = 'enable toggle'  # Toggle AeroSpace
+alt-r = 'mode resize'  # Resize mode (h/j/k/l)
+# @group Ctrl Shift ←→↑↓    Resize window
 ctrl-shift-left = 'resize width -50'
 ctrl-shift-up = 'resize height +50'
 ctrl-shift-down = 'resize height -50'
@@ -199,4 +202,3 @@ run = ['layout floating', 'move-node-to-workspace 1']
 if.app-id = 'us.zoom.xos'
 check-further-callbacks = true
 run = ['move-node-to-workspace 9']
-
