@@ -1,0 +1,5 @@
+{
+  "theme": "dark",
+  "model": "claude-sonnet-5-5",
+  "advisorModel": "opus"
+}
