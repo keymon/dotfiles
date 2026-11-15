@@ -7,3 +7,6 @@ source ~/.bashrc
 source ~/.orbstack/shell/init.bash 2>/dev/null || :
 
 alias assume=". assume"
+
+# mise shims for non-interactive login shells (.bashrc skips ~/.my_bash there)
+source ~/.my_bash/custom/80_mise.bash
